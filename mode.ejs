@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>태양광 모니터링 - 모드 설정</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-family: 'Heebo', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .navbar {
+            background-color: #6a11cb;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 20px;
+            width: 100%;
+        }
+        .navbar a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar .team-name {
+            position: absolute;
+            left: 20px;
+            font-weight: bold;
+        }
+        .right-nav {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+        }
+        .logout-btn {
+            margin-left: 15px;
+            padding: 5px 10px;
+            border: 2px solid #17a2b8; /* 민트색 테두리 */
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            background-color: #6a11cb; /* 네비게이션 바 색상 */
+            font-weight: bold;
+        }
+        .logout-btn:hover {
+            background-color: #5c0db6; /* 마우스 오버 시 약간 더 어두운 색 */
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 60%;
+            max-width: 800px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .mode-section {
+            width: 48%;
+            text-align: center;
+            color: #333;
+        }
+        .mode-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .mode-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            background: #17a2b8;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" style="position: relative;">
+        <div class="team-name">ANS</div>
+        <a href="/dashboard">발전량 통계</a>
+        <a href="/forecast">발전량 예측</a>
+        <a href="/mode">모드</a>
+        <a href="/trade">전력 거래</a>
+        <a href="/news">기술 소식</a>
+    
+        <div class="right-nav">
+            <span><%= userNickname %>님 환영합니다!</span>
+            <a href="/user/logout" class="logout-btn">로그아웃</a>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="mode-section">
+            <h2>스노우 모드</h2>
+            <p>스노우 모드는 눈이 많이 올 때 패널에 눈이 쌓이지 않도록 경사각을 조정하여 최적의 발전 효율을 유지하는 모드입니다.</p>
+            <img src="/image/screenshot-1.png" alt="스노우 모드">
+            <button class="mode-button" onclick="activateSnowMode()">스노우 모드 활성화</button>
+        </div>
+        
+        <div class="mode-section">
+            <h2>윈드 모드</h2>
+            <p>윈드 모드는 강풍이 불 때 패널의 각도를 조정하여 바람의 저항을 최소화하고 안전성을 높이는 모드입니다.</p>
+            <img src="/image/screenshot-2.png" alt="윈드 모드">
+            <button class="mode-button" onclick="activateWindMode()">윈드 모드 활성화</button>
+        </div>
+    </div>
+
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script>
+        function activateSnowMode() {
+            fetch('/run-snow-mode')
+                .then(response => response.text())
+                .then(data => alert(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function activateWindMode() {
+            fetch('/run-wind-mode')
+                .then(response => response.text())
+                .then(data => alert(data))
+                .catch(error => alert('Error activating Wind Mode: ' + error));
+        }
+    </script>
+</body>
+</html>
